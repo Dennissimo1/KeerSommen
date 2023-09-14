@@ -18,7 +18,7 @@ function main(){
 
    if (game_phase === state.Start) {
       createMenu();
-      document.getElementsByClassName("menu-button")[0].addEventListener("click", getSelectedValueAndCalculate);
+      document.getElementsByClassName("menu-button")[0].addEventListener("click", getSelectedValueAndPrepareSums);
 
    }
 }
@@ -63,7 +63,7 @@ function createTitle() {
 function createDropdown(){
    var dropdown = document.createElement("select");
    dropdown.classList.add("menu-dropdown");
-   for (let i = 0; i <= 10; i++) {
+   for (let i = 1; i <= 10; i++) {
       var option = document.createElement("option");
       option.classList.add("menu-dropdown-option-"+ i);
       option.setAttribute("value", i);
@@ -87,9 +87,32 @@ function createButton() {
 }
 //---------------MAIN MENU---------------
 //---------------CORE---------------
-function getSelectedValueAndCalculate() {
-   var e = document.getElementsByClassName("menu-dropdown")[0].value;
-   console.log(e)
+function getSelectedValueAndPrepareSums() {
+   var selected = document.getElementsByClassName("menu-dropdown")[0].value;
+   const sums = [];
+   const sum = class {
+      constructor(firstNumber, secondNumber) {
+         this.firstNumber = firstNumber;
+         this.SecondNumber = secondNumber;
+         this.outcome = firstNumber * secondNumber; 
+      }
+   }
+   for (let i = 0; i <= 10; i++) {
+      const n = new sum(i, selected);
+      sums.push(n);
+   }
+   let shuffled = sums
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value)
+   
+   console.log(shuffled)
+
+   // console.log(sums);
+
+
+
+
 }
 
 
