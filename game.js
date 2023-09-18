@@ -1,27 +1,40 @@
 // import * as Core from './core.js'; -- look at this some other time
 
-window.onload = main();
-
-
-
-function main(){
-   setMainWindow();
-   
-   const state = {
-      Start: Symbol("Start"),
-      Playing: Symbol("Playing"),
-      EndNegative: Symbol("EndNegative"),
-      EndPositive: Symbol("EndPositive")
-   }
-
-   let game_phase = state.Start;
-
-   if (game_phase === state.Start) {
-      createMenu();
-      document.getElementsByClassName("menu-button")[0].addEventListener("click", getSelectedValueAndPrepareSums);
-
-   }
+const state = {
+   Initial: Symbol("Initial"),
+   Start: Symbol("Start"),
+   Playing: Symbol("Playing"),
+   EndNegative: Symbol("EndNegative"),
+   EndPositive: Symbol("EndPositive")
 }
+
+window.onload = () => {
+   setMainWindow();
+   stateObject.getOnChange = function() {
+      if(this.value == state.Start) {
+         gameStart();
+      }
+   }
+   stateObject.set(state.Start);
+}
+
+// function phase(current_phase = state.Start, sums = []) {
+//    let game_phase = current_phase;
+//    main(game_phase, sums);
+// }
+
+// function main(game_phase, sums){
+   // switch (game_phase) {
+   //    case state.Start: 
+   //       createMenu();
+   //       let sums = document.getElementsByClassName("menu-button")[0].addEventListener("click", getSelectedValueAndPrepareSums);
+   //       phase(state.Playing, sums);
+   //    case state.Playing:
+   //       console.log(game_phase);
+   //       removeElement("menu");
+   // }
+
+
 
 function setMainWindow() {
    var mainWindow = document.createElement("div");
@@ -31,6 +44,12 @@ function setMainWindow() {
    mainWindow.style.backgroundImage = "url('assets/sky.png')";
    document.body.appendChild(mainWindow);
 }
+
+function gameStart() {
+   createMenu();
+   let sums = document.getElementsByClassName("menu-button")[0].addEventListener("click", getSelectedValueAndPrepareSums);
+}
+
 //---------------MAIN MENU---------------
 function createMenu() {
    var menu = document.createElement("div");
@@ -108,7 +127,9 @@ function getSelectedValueAndPrepareSums() {
    
    console.log(shuffled)
 
-   // console.log(sums);
+   stateObject.set(state.Playing)
+
+   console.log(stateObject.value);
 
 
 
@@ -122,3 +143,18 @@ function getSelectedValueAndPrepareSums() {
 function getFirstElementAndAdd(className, element) {
    document.getElementsByClassName(className)[0].appendChild(element);
 }
+
+function removeElement(className) {
+   const element = document.getElementsByClassName(className)[0]
+   element.remove;
+}
+
+var stateObject = {
+   value: state.Initial,
+   set: function (value) {
+       this.value = value;
+       this.getOnChange();
+   }
+}
+
+// https://stackoverflow.com/questions/1759987/listening-for-variable-changes-in-javascript
