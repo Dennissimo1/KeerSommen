@@ -9,32 +9,19 @@ const state = {
 }
 
 window.onload = () => {
+   // let sums = []
    setMainWindow();
    stateObject.getOnChange = function() {
       if(this.value == state.Start) {
          gameStart();
       }
+      if(this.value == state.Playing) {
+         gamePlaying();
+
+      }
    }
    stateObject.set(state.Start);
 }
-
-// function phase(current_phase = state.Start, sums = []) {
-//    let game_phase = current_phase;
-//    main(game_phase, sums);
-// }
-
-// function main(game_phase, sums){
-   // switch (game_phase) {
-   //    case state.Start: 
-   //       createMenu();
-   //       let sums = document.getElementsByClassName("menu-button")[0].addEventListener("click", getSelectedValueAndPrepareSums);
-   //       phase(state.Playing, sums);
-   //    case state.Playing:
-   //       console.log(game_phase);
-   //       removeElement("menu");
-   // }
-
-
 
 function setMainWindow() {
    var mainWindow = document.createElement("div");
@@ -47,7 +34,12 @@ function setMainWindow() {
 
 function gameStart() {
    createMenu();
-   let sums = document.getElementsByClassName("menu-button")[0].addEventListener("click", getSelectedValueAndPrepareSums);
+   document.getElementsByClassName("menu-button")[0].addEventListener("click", setStateToPlaying);
+}
+
+function gamePlaying() {
+   sums = getSelectedValueAndPrepareSums();
+   // console.log(sums)
 }
 
 //---------------MAIN MENU---------------
@@ -108,32 +100,25 @@ function createButton() {
 //---------------CORE---------------
 function getSelectedValueAndPrepareSums() {
    var selected = document.getElementsByClassName("menu-dropdown")[0].value;
-   const sums = [];
+   const generated_sums = [];
    const sum = class {
       constructor(firstNumber, secondNumber) {
          this.firstNumber = firstNumber;
          this.SecondNumber = secondNumber;
          this.outcome = firstNumber * secondNumber; 
+         this.passed = false;
       }
    }
    for (let i = 0; i <= 10; i++) {
       const n = new sum(i, selected);
-      sums.push(n);
+      generated_sums.push(n);
    }
-   let shuffled = sums
+   let shuffled = generated_sums
     .map(value => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value)
    
-   console.log(shuffled)
-
-   stateObject.set(state.Playing)
-
-   console.log(stateObject.value);
-
-
-
-
+   return shuffled
 }
 
 
@@ -155,6 +140,10 @@ var stateObject = {
        this.value = value;
        this.getOnChange();
    }
+}
+
+function setStateToPlaying() {
+   stateObject.set(state.Playing)
 }
 
 // https://stackoverflow.com/questions/1759987/listening-for-variable-changes-in-javascript
