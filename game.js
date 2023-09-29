@@ -38,8 +38,64 @@ function gameStart() {
 }
 
 function gamePlaying() {
-   sums = getSelectedValueAndPrepareSums();
-   // console.log(sums)
+   // step 1 prepare sums
+   all_sums = getSelectedValueAndPrepareSums();
+   let failed_sums = [];
+   let passed_sums = [];
+
+   console.log(all_sums)
+
+   // step 2 remove elements
+   const main = document.getElementsByClassName("main")[0];
+   const menu = document.getElementsByClassName("menu")[0];
+   main.removeChild(menu);
+
+   //step 3: create new elements
+   const instruct = document.createElement("p");
+   instruct.classList.add("instruction");
+   instruct.innerText = "Los de volgende som op: hoeveel is ...";
+   getFirstElementAndAdd("main", instruct);
+
+   const pfield = document.createElement("div");
+   pfield.classList.add("playing-field");
+   getFirstElementAndAdd("main", pfield);
+
+   all_sums.forEach((sum, index) => {
+      var created = createSum(sum, index);
+      getFirstElementAndAdd("playing-field", created);
+   }); 
+   document.getElementsByClassName("sum-0")[0].setAttribute("status", "active");
+
+   //step 4: add event listeners
+}
+
+
+function createSum(sum, indexNo) {
+   const sumLine = document.createElement("div");
+   sumLine.classList.add(`sum-${indexNo}`);
+   sumLine.setAttribute("status", "inactive");
+   
+   const numberBoxLeft = document.createElement("div");
+   numberBoxLeft.classList.add("numberbox-left");
+   numberBoxLeft.innerHTML = sum.firstNumber;
+   sumLine.appendChild(numberBoxLeft);
+
+   const multiplyBox = document.createElement("div");
+   multiplyBox.classList.add("multiply-box");
+   sumLine.appendChild(multiplyBox);
+
+   const numberBoxRight = document.createElement("div");
+   numberBoxRight.classList.add("numberbox-right");
+   numberBoxRight.innerHTML = sum.secondNumber;
+   sumLine.appendChild(numberBoxRight);
+
+   const answerBox = document.createElement("div");
+   answerBox.classList.add("answer-box");
+   answerBox.setAttribute("answer", sum.outcome);
+   answerBox.setAttribute("passed", sum.passed);
+   sumLine.appendChild(answerBox);
+
+   return sumLine;
 }
 
 //---------------MAIN MENU---------------
@@ -56,23 +112,23 @@ function createMenu() {
 
 function createMenuItems(){
    const elements = []
-   var title = createTitle();
-   var dropdown = createDropdown();
-   var button = createButton();
+   let title = createTitle();
+   let dropdown = createDropdown();
+   let button = createButton();
    elements.push(title, dropdown, button);
    return elements
    
 }
 
 function createTitle() {
-   var title = document.createElement("p");
+   let title = document.createElement("p");
    title.classList.add("menu-title");
    title.innerText = "Welke tafel wil je oefenen?";
    return title;
 }
 
 function createDropdown(){
-   var dropdown = document.createElement("select");
+   let dropdown = document.createElement("select");
    dropdown.classList.add("menu-dropdown");
    for (let i = 1; i <= 10; i++) {
       var option = document.createElement("option");
@@ -81,7 +137,7 @@ function createDropdown(){
       option.innerHTML = i;
       dropdown.appendChild(option);
    }
-   var option_all = document.createElement("option");
+   let option_all = document.createElement("option");
    option_all.classList.add("menu-dropdown-option-all");
    option_all.setAttribute("value", "all");
    option_all.innerHTML = "Allemaal"
@@ -104,7 +160,7 @@ function getSelectedValueAndPrepareSums() {
    const sum = class {
       constructor(firstNumber, secondNumber) {
          this.firstNumber = firstNumber;
-         this.SecondNumber = secondNumber;
+         this.secondNumber = secondNumber;
          this.outcome = firstNumber * secondNumber; 
          this.passed = false;
       }
