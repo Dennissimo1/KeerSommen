@@ -39,7 +39,7 @@ function gameStart() {
 
 function gamePlaying() {
    // step 1 prepare sums
-   all_sums = getSelectedValueAndPrepareSums();
+   let all_sums = getSelectedValueAndPrepareSums();
    let failed_sums = [];
    let passed_sums = [];
 
