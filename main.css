@@ -1,0 +1,11 @@
+body {
+    max-width: max-content;
+    margin: auto;
+}
+div[class^="sum"] {
+    display: flex;
+    flex-direction: row;
+}
+div[status="inactive"] {
+    display: none;
+}

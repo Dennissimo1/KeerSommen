@@ -67,6 +67,33 @@ function gamePlaying() {
    document.getElementsByClassName("sum-0")[0].setAttribute("status", "active");
 
    //step 4: add event listeners
+   // document.getElementsByClassName("answer-box-0")[0].onchange = function() {
+   //    let answer = parseInt(this.getAttribute("answer"));
+   //    let input = parseInt(this.value);
+   //    console.log("Answer: " + answer + " Input: " + input);
+   //    if (answer === input) {
+   //       this.setAttribute("passed", "true");
+   //       this.disabled = true;
+   //    }
+   // } 
+   // the above works, but looking for something a bit more scaleable
+   for (let index = 0; index < all_sums.length; index++) {
+      document.getElementsByClassName(`answer-box-${index}`)[0].onchange = function() {
+      let answer = parseInt(this.getAttribute("answer"));
+      let input = parseInt(this.value);
+      console.log("Answer: " + answer + " Input: " + input);
+      if (answer === input) {
+         this.setAttribute("passed", "true");
+         this.disabled = true;
+         if (index === 9) {
+            //bla
+         }
+         document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
+         document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+      }
+   } 
+      
+   }
 }
 
 
@@ -82,6 +109,7 @@ function createSum(sum, indexNo) {
 
    const multiplyBox = document.createElement("div");
    multiplyBox.classList.add("multiply-box");
+   multiplyBox.innerText = "X"
    sumLine.appendChild(multiplyBox);
 
    const numberBoxRight = document.createElement("div");
@@ -89,8 +117,9 @@ function createSum(sum, indexNo) {
    numberBoxRight.innerHTML = sum.secondNumber;
    sumLine.appendChild(numberBoxRight);
 
-   const answerBox = document.createElement("div");
-   answerBox.classList.add("answer-box");
+   const answerBox = document.createElement("input");
+   answerBox.classList.add(`answer-box-${indexNo}`);
+   answerBox.setAttribute("type", "text");
    answerBox.setAttribute("answer", sum.outcome);
    answerBox.setAttribute("passed", sum.passed);
    sumLine.appendChild(answerBox);
