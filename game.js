@@ -86,10 +86,16 @@ function gamePlaying() {
          this.setAttribute("passed", "true");
          this.disabled = true;
          if (index === 9) {
-            //bla
+            
          }
          document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
          document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+      }
+      else {
+         let skipButton = document.getElementsByClassName(`skip-sum-${index}`)[0];
+         skipButton.style.display = "initial";
+         failed_sums.push(all_sums[index]);
+         skipButton.addEventListener("click", continueLoop); //test this!
       }
    } 
       
@@ -123,6 +129,12 @@ function createSum(sum, indexNo) {
    answerBox.setAttribute("answer", sum.outcome);
    answerBox.setAttribute("passed", sum.passed);
    sumLine.appendChild(answerBox);
+
+   const skipSum = document.createElement("button");
+   skipSum.classList.add(`skip-button-${indexNo}`);
+   skipSum.style.display = "none";
+   skipSum.innerHTML = "Som overslaan";
+   sumLine.append(skipSum);
 
    return sumLine;
 }
@@ -229,6 +241,10 @@ var stateObject = {
 
 function setStateToPlaying() {
    stateObject.set(state.Playing)
+}
+
+function continueLoop() {
+   continue;
 }
 
 // https://stackoverflow.com/questions/1759987/listening-for-variable-changes-in-javascript
