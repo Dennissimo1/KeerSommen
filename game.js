@@ -66,39 +66,31 @@ function gamePlaying() {
    }); 
    document.getElementsByClassName("sum-0")[0].setAttribute("status", "active");
 
-   //step 4: add event listeners
-   // document.getElementsByClassName("answer-box-0")[0].onchange = function() {
-   //    let answer = parseInt(this.getAttribute("answer"));
-   //    let input = parseInt(this.value);
-   //    console.log("Answer: " + answer + " Input: " + input);
-   //    if (answer === input) {
-   //       this.setAttribute("passed", "true");
-   //       this.disabled = true;
-   //    }
-   // } 
-   // the above works, but looking for something a bit more scaleable
-   for (let index = 0; index < all_sums.length; index++) {
+   for (const [index, sum] of all_sums.entries()) {
       document.getElementsByClassName(`answer-box-${index}`)[0].onchange = function() {
       let answer = parseInt(this.getAttribute("answer"));
       let input = parseInt(this.value);
       console.log("Answer: " + answer + " Input: " + input);
+      if (answer !== input) {
+         let skipButton = document.getElementsByClassName(`skip-button-${index}`)[0];
+         skipButton.disabled = false;
+         skipButton.addEventListener("click", function () {
+            failed_sums.push(all_sums[index]);
+            console.log("dit zit er in failed sums" + failed_sums); //test this
+            document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
+            document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+         }); 
+      }
       if (answer === input) {
          this.setAttribute("passed", "true");
          this.disabled = true;
          if (index === 9) {
-            
+            //todo
          }
          document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
          document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
-      }
-      else {
-         let skipButton = document.getElementsByClassName(`skip-sum-${index}`)[0];
-         skipButton.style.display = "initial";
-         failed_sums.push(all_sums[index]);
-         skipButton.addEventListener("click", continueLoop); //test this!
-      }
-   } 
-      
+         }      
+      } 
    }
 }
 
@@ -132,7 +124,7 @@ function createSum(sum, indexNo) {
 
    const skipSum = document.createElement("button");
    skipSum.classList.add(`skip-button-${indexNo}`);
-   skipSum.style.display = "none";
+   skipSum.disabled = true;
    skipSum.innerHTML = "Som overslaan";
    sumLine.append(skipSum);
 
@@ -242,9 +234,3 @@ var stateObject = {
 function setStateToPlaying() {
    stateObject.set(state.Playing)
 }
-
-function continueLoop() {
-   continue;
-}
-
-// https://stackoverflow.com/questions/1759987/listening-for-variable-changes-in-javascript
