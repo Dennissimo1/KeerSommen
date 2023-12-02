@@ -4,8 +4,7 @@ const state = {
    Initial: Symbol("Initial"),
    Start: Symbol("Start"),
    Playing: Symbol("Playing"),
-   EndNegative: Symbol("EndNegative"),
-   EndPositive: Symbol("EndPositive")
+   EndOfGame: Symbol("EndOfGame"),
 }
 
 window.onload = () => {
@@ -16,8 +15,11 @@ window.onload = () => {
          gameStart();
       }
       if(this.value == state.Playing) {
-         gamePlaying();
-
+         let passed_sums = gamePlaying();
+      }
+      if(this.value == state.EndOfGame) {
+         console.log("passed sums = " + passed_sums)
+         gameEnd(passed_sums)
       }
    }
    stateObject.set(state.Start);
@@ -41,7 +43,7 @@ function gamePlaying() {
    // step 1 prepare sums
    let all_sums = getSelectedValueAndPrepareSums();
    let failed_sums = [];
-   let passed_sums = [];
+   let passed_sums
 
    console.log(all_sums)
 
@@ -76,7 +78,7 @@ function gamePlaying() {
          skipButton.disabled = false;
          skipButton.addEventListener("click", function () {
             failed_sums.push(all_sums[index]);
-            console.log("dit zit er in failed sums" + failed_sums); //test this
+            // console.log(failed_sums.map((sum) => console.log("dit zit er in failed sums" + sum) )); test this
             document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
             document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
          }); 
@@ -85,13 +87,23 @@ function gamePlaying() {
          this.setAttribute("passed", "true");
          this.disabled = true;
          if (index === 9) {
-            //todo
+            document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
+            passed_sums = all_sums.length - failed_sums.length
+            console.log("number of sums passed: " + passed_sums)
+            setStateToEndGame();
+            return passed_sums // does not work, variable is not passed on. Work on this
          }
          document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
          document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
          }      
       } 
    }
+}
+
+function gameEnd(passed_sums) {
+   const main = document.getElementsByClassName("main")[0];
+   const menu = document.getElementsByClassName("menu")[0];
+   main.removeChild(menu);
 }
 
 
@@ -233,4 +245,8 @@ var stateObject = {
 
 function setStateToPlaying() {
    stateObject.set(state.Playing)
+}
+
+function setStateToEndGame() {
+   stateObject.set(state.EndOfGame)
 }
