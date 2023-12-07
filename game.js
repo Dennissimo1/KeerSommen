@@ -104,12 +104,40 @@ function gamePlaying() {
 }
 
 function gameEnd(total_passed_sums) {
+   //first we remove old stuff
    const main = document.getElementsByClassName("main")[0];
    const pfield = document.getElementsByClassName("playing-field")[0];
    const instruction = document.getElementsByClassName("instruction")[0];
    main.removeChild(pfield);
    main.removeChild(instruction);
-   alert(total_passed_sums)
+   // alert(total_passed_sums)
+
+   const modal = document.createElement("div");
+   modal.classList.add("end-modal");
+   main.appendChild(modal);
+
+   const congratsText = document.createElement("div");
+   congratsText.classList.add("congrats-text");
+   congratsText.innerText = "Je hebt de tafel afgerond!";
+   modal.appendChild(congratsText);
+
+   const congratsImage = document.createElement("div");
+   congratsImage.classList.add("congrats-image");
+   congratsImage.src = 'assets/dancing_unicorn.gif';
+
+   const resultsText = document.createElement("div");
+   resultsText.classList.add("results-text");
+   if (total_passed_sums <= 5) {
+      resultsText.innerText = `Je hebt ${total_passed_sums} van de 10 sommen goed. Volgende keer beter?`;
+   };
+   if (between(total_passed_sums, 6, 9)) {
+      resultsText.innerText = `Je hebt ${total_passed_sums} van de 10 sommen goed. Goed gedaan hoor!`
+   };
+   if (total_passed_sums > 9) {
+      resultsText.innerText = `Wow! Je hebt alles goed, topper!! Kan je dit ook met een andere tafel?`
+      modal.appendChild(congratsImage);
+   };
+   modal.appendChild(resultsText);
 }
 
 
@@ -256,3 +284,7 @@ function setStateToPlaying() {
 function setStateToEndGame() {
    stateObject.set(state.EndOfGame)
 }
+
+function between(x, min, max) {
+   return x >= min && x <= max;
+ }
