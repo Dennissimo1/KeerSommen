@@ -7,6 +7,8 @@ const state = {
    EndOfGame: Symbol("EndOfGame"),
 }
 
+let total_passed_sums = 0
+
 window.onload = () => {
    // let sums = []
    setMainWindow();
@@ -15,11 +17,11 @@ window.onload = () => {
          gameStart();
       }
       if(this.value == state.Playing) {
-         let passed_sums = gamePlaying();
+         gamePlaying();
       }
       if(this.value == state.EndOfGame) {
-         console.log("passed sums = " + passed_sums)
-         gameEnd(passed_sums)
+         console.log("passed sums = " + total_passed_sums)
+         gameEnd(total_passed_sums)
       }
    }
    stateObject.set(state.Start);
@@ -90,8 +92,9 @@ function gamePlaying() {
             document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
             passed_sums = all_sums.length - failed_sums.length
             console.log("number of sums passed: " + passed_sums)
+            total_passed_sums = passed_sums
             setStateToEndGame();
-            return passed_sums // does not work, variable is not passed on. Work on this
+            return
          }
          document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
          document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
@@ -100,10 +103,13 @@ function gamePlaying() {
    }
 }
 
-function gameEnd(passed_sums) {
+function gameEnd(total_passed_sums) {
    const main = document.getElementsByClassName("main")[0];
-   const menu = document.getElementsByClassName("menu")[0];
-   main.removeChild(menu);
+   const pfield = document.getElementsByClassName("playing-field")[0];
+   const instruction = document.getElementsByClassName("instruction")[0];
+   main.removeChild(pfield);
+   main.removeChild(instruction);
+   alert(total_passed_sums)
 }
 
 
@@ -210,7 +216,7 @@ function getSelectedValueAndPrepareSums() {
          this.passed = false;
       }
    }
-   for (let i = 0; i <= 10; i++) {
+   for (let i = 0; i <= 9; i++) {
       const n = new sum(i, selected);
       generated_sums.push(n);
    }
