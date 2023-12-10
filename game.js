@@ -71,7 +71,8 @@ function gamePlaying() {
    document.getElementsByClassName("sum-0")[0].setAttribute("status", "active");
 
    for (const [index, sum] of all_sums.entries()) {
-      document.getElementsByClassName(`answer-box-${index}`)[0].onchange = function() {
+      document.getElementsByClassName(`answer-box-${index}`)[0].oninput = function() {
+      document.getElementsByClassName(`answer-box-${index}`)[0].selectionStart;
       let answer = parseInt(this.getAttribute("answer"));
       let input = parseInt(this.value);
       console.log("Answer: " + answer + " Input: " + input);
@@ -123,7 +124,14 @@ function gameEnd(total_passed_sums) {
 
    const congratsImage = document.createElement("div");
    congratsImage.classList.add("congrats-image");
-   congratsImage.src = 'assets/dancing_unicorn.gif';
+
+   const image = document.createElement("img");
+   image.classList.add("actual-image")
+   image.src = "assets/dancing_unicorn.gif";
+   
+   congratsImage.appendChild(image);
+   modal.appendChild(congratsImage);
+   
 
    const resultsText = document.createElement("div");
    resultsText.classList.add("results-text");
@@ -138,6 +146,17 @@ function gameEnd(total_passed_sums) {
       modal.appendChild(congratsImage);
    };
    modal.appendChild(resultsText);
+
+   const restartButton = document.createElement("button");
+   restartButton.classList.add(`restart-button`);
+   restartButton.innerHTML = "Begin opnieuw!";
+   modal.append(restartButton);
+
+   restartButton.addEventListener("click", function () {
+      const modal = document.getElementsByClassName("end-modal")[0];
+      modal.remove();
+      setStateToStart();
+   }); 
 }
 
 
@@ -275,6 +294,10 @@ var stateObject = {
        this.value = value;
        this.getOnChange();
    }
+}
+
+function setStateToStart() {
+   stateObject.set(state.Start)
 }
 
 function setStateToPlaying() {
