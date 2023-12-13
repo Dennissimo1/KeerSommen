@@ -1,6 +1,10 @@
 body {
+    display: flex;
+    justify-content: center;
     max-width: max-content;
     margin: auto;
+    place-items: center;
+    padding: 2rem;
 }
 div[class^="sum"] {
     display: flex;
@@ -8,4 +12,15 @@ div[class^="sum"] {
 }
 div[status="inactive"] {
     display: none;
+}
+/* div[class^="menu-"] {
+    margin-left: 10px;
+    margin-right: 10px;
+} */
+div[class="menu"] {
+    display: flex;
+    margin: auto;
+    /* width: 50%; */
+    justify-content: center;
+    place-items: center;
 }

@@ -71,8 +71,9 @@ function gamePlaying() {
    document.getElementsByClassName("sum-0")[0].setAttribute("status", "active");
 
    for (const [index, sum] of all_sums.entries()) {
+      document.getElementsByClassName(`answer-box-${index}`)[0].focus();
       document.getElementsByClassName(`answer-box-${index}`)[0].oninput = function() {
-      document.getElementsByClassName(`answer-box-${index}`)[0].selectionStart;
+      
       let answer = parseInt(this.getAttribute("answer"));
       let input = parseInt(this.value);
       console.log("Answer: " + answer + " Input: " + input);
@@ -81,9 +82,17 @@ function gamePlaying() {
          skipButton.disabled = false;
          skipButton.addEventListener("click", function () {
             failed_sums.push(all_sums[index]);
-            // console.log(failed_sums.map((sum) => console.log("dit zit er in failed sums" + sum) )); test this
+            document.getElementsByClassName(`answer-box-${index}`)[0].blur();
             document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
-            document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+            if (index != 9) {
+               document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+               document.getElementsByClassName(`answer-box-${index + 1}`)[0].focus();
+            } else {
+               passed_sums = all_sums.length - failed_sums.length
+               total_passed_sums = passed_sums
+               setStateToEndGame();
+               return
+            }
          }); 
       }
       if (answer === input) {
@@ -97,8 +106,10 @@ function gamePlaying() {
             setStateToEndGame();
             return
          }
+         document.getElementsByClassName(`answer-box-${index}`)[0].blur();
          document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
          document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+         document.getElementsByClassName(`answer-box-${index + 1}`)[0].focus();
          }      
       } 
    }
@@ -130,7 +141,7 @@ function gameEnd(total_passed_sums) {
    image.src = "assets/dancing_unicorn.gif";
    
    congratsImage.appendChild(image);
-   modal.appendChild(congratsImage);
+
    
 
    const resultsText = document.createElement("div");
