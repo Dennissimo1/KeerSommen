@@ -1,4 +1,7 @@
 body {
+    font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-size: 15px;
     display: flex;
     justify-content: center;
     max-width: max-content;
@@ -13,14 +16,72 @@ div[class^="sum"] {
 div[status="inactive"] {
     display: none;
 }
-/* div[class^="menu-"] {
-    margin-left: 10px;
-    margin-right: 10px;
-} */
 div[class="menu"] {
+    position : relative;
     display: flex;
     margin: auto;
-    /* width: 50%; */
     justify-content: center;
     place-items: center;
+    top: 40%;
+}
+p[class="menu-title"] {
+    /* https://stackoverflow.com/questions/8865458/how-do-i-vertically-center-text-with-css */
+    text-align: center;
+    line-height: 80px;
+    margin-right: 10px;
+    width: 120px;
+    height: 80px;
+    background: beige;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+  p[class="menu-title"]:before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 26px;
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-right: 26px solid antiquewhite;
+    border-bottom: 13px solid transparent;
+}
+span[class="menu-title-span"]{
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+div[class="menu-box-dropdown"]{
+    background: beige;
+    width: 120px;
+    height: 80px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+}
+select[class="menu-dropdown"] {
+    width: 120px;
+    height: 60px;
+    background-color: beige;
+    margin-top: 10px;
+    border: 0px;
+}
+select[class="menu-dropdown"] > option {
+    text-align: center;
+}
+
+button[class="menu-button"] {
+    background-color: beige;
+    margin-left: 10px;
+    width: 120px;
+    height: 80px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+span[class="menu-button-text"]{
+    text-align: center; 
 }

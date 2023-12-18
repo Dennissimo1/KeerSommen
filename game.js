@@ -231,8 +231,13 @@ function createMenuItems(){
 
 function createTitle() {
    let title = document.createElement("p");
+   let titleSpan = document.createElement("span");
+
    title.classList.add("menu-title");
-   title.innerText = "Welke tafel wil je oefenen?";
+   titleSpan.classList.add("menu-title-span");
+   
+   titleSpan.innerText = "Welke tafel wil je oefenen?";
+   title.appendChild(titleSpan);
    return title;
 }
 
@@ -246,19 +251,29 @@ function createDropdown(){
       option.innerHTML = i;
       dropdown.appendChild(option);
    }
-   let option_all = document.createElement("option");
-   option_all.classList.add("menu-dropdown-option-all");
-   option_all.setAttribute("value", "all");
-   option_all.innerHTML = "Allemaal"
-   dropdown.appendChild(option_all);
+   let dropDownBox = document.createElement("div");
+   dropDownBox.classList.add("menu-box-dropdown");
+   dropDownBox.appendChild(dropdown);
+   // let option_all = document.createElement("option");
+   // option_all.classList.add("menu-dropdown-option-all");
+   // option_all.setAttribute("value", "all");
+   // option_all.innerHTML = "Allemaal"
+   // dropdown.appendChild(option_all);
+   // maybe later...
 
-   return dropdown;
+   return dropDownBox;
 }
 
 function createButton() {
-   var button = document.createElement("button");
+   let button = document.createElement("button");
    button.classList.add("menu-button");
-   button.innerHTML = "Kies!";
+
+   let buttonText = document.createElement("span");
+   buttonText.classList.add("menu-button-text");
+
+   buttonText.innerHTML = "Kies!";
+
+   button.appendChild(buttonText);
    return button;
 }
 //---------------MAIN MENU---------------
