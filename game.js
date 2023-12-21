@@ -10,7 +10,6 @@ const state = {
 let total_passed_sums = 0
 
 window.onload = () => {
-   // let sums = []
    setMainWindow();
    stateObject.getOnChange = function() {
       if(this.value == state.Start) {
@@ -53,7 +52,9 @@ function gamePlaying() {
    // step 2 remove elements
    const main = document.getElementsByClassName("main")[0];
    const menu = document.getElementsByClassName("menu")[0];
+   const titleBox = document.getElementsByClassName("title-box")[0];
    main.removeChild(menu);
+   main.removeChild(titleBox);
 
    //step 3: create new elements
    const instruct = document.createElement("p");
@@ -66,7 +67,7 @@ function gamePlaying() {
    getFirstElementAndAdd("main", pfield);
 
    all_sums.forEach((sum, index) => {
-      var created = createSum(sum, index);
+      let created = createSum(sum, index);
       getFirstElementAndAdd("playing-field", created);
    }); 
    document.getElementsByClassName("sum-0")[0].setAttribute("status", "active");
@@ -123,7 +124,6 @@ function gameEnd(total_passed_sums) {
    const instruction = document.getElementsByClassName("instruction")[0];
    main.removeChild(pfield);
    main.removeChild(instruction);
-   // alert(total_passed_sums)
 
    const modal = document.createElement("div");
    modal.classList.add("end-modal");
