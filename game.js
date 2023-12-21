@@ -37,6 +37,7 @@ function setMainWindow() {
 }
 
 function gameStart() {
+   createKeerSommenTitle();
    createMenu();
    document.getElementsByClassName("menu-button")[0].addEventListener("click", setStateToPlaying);
 }
@@ -208,14 +209,27 @@ function createSum(sum, indexNo) {
 }
 
 //---------------MAIN MENU---------------
+function createKeerSommenTitle() {
+   let titleDiv = document.createElement("div");
+   titleDiv.classList.add("title-box");
+
+   let titleSpan = document.createElement("span");
+   titleSpan.classList.add("title-span");
+   titleSpan.innerText = "Keersommen oefenen!";
+
+   titleDiv.appendChild(titleSpan);
+   getFirstElementAndAdd("main", titleDiv);
+
+}
+
 function createMenu() {
-   var menu = document.createElement("div");
+   let menu = document.createElement("div");
    menu.classList.add("menu");
    getFirstElementAndAdd("main", menu);
 
-   var menuItems = createMenuItems();
+   let menuItems = createMenuItems();
    menuItems.forEach((item) => {
-      getFirstElementAndAdd("menu", item)
+      getFirstElementAndAdd("menu", item);
    });
 }
 

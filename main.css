@@ -16,6 +16,22 @@ div[class^="sum"] {
 div[status="inactive"] {
     display: none;
 }
+div[class="title-box"] {
+    position : relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    place-items: center;
+    text-align: center;
+    top: 30%;
+    width: 200px;
+    height: 80px;
+    background: beige;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
 div[class="menu"] {
     position : relative;
     display: flex;
