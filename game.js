@@ -58,8 +58,11 @@ function gamePlaying() {
 
    //step 3: create new elements
    const instruct = document.createElement("p");
+   const instructBox = document.createElement("span");
    instruct.classList.add("instruction");
-   instruct.innerText = "Los de volgende som op: hoeveel is ...";
+   instructBox.classList.add("instruction-span");
+   instructBox.innerText = "Los de volgende som op: hoeveel is ...";
+   instruct.appendChild(instructBox);
    getFirstElementAndAdd("main", instruct);
 
    const pfield = document.createElement("div");
@@ -98,20 +101,22 @@ function gamePlaying() {
          }); 
       }
       if (answer === input) {
-         this.setAttribute("passed", "true");
          this.disabled = true;
-         if (index === 9) {
+         this.setAttribute("passed", "true");
+         setTimeout(() => {
+            if (index === 9) {
+               document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
+               passed_sums = all_sums.length - failed_sums.length
+               console.log("number of sums passed: " + passed_sums)
+               total_passed_sums = passed_sums
+               setStateToEndGame();
+               return
+            }
+            document.getElementsByClassName(`answer-box-${index}`)[0].blur();
             document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
-            passed_sums = all_sums.length - failed_sums.length
-            console.log("number of sums passed: " + passed_sums)
-            total_passed_sums = passed_sums
-            setStateToEndGame();
-            return
-         }
-         document.getElementsByClassName(`answer-box-${index}`)[0].blur();
-         document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
-         document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
-         document.getElementsByClassName(`answer-box-${index + 1}`)[0].focus();
+            document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+            document.getElementsByClassName(`answer-box-${index + 1}`)[0].focus();
+         }, 500)
          }      
       } 
    }
@@ -171,7 +176,6 @@ function gameEnd(total_passed_sums) {
    }); 
 }
 
-
 function createSum(sum, indexNo) {
    const sumLine = document.createElement("div");
    sumLine.classList.add(`sum-${indexNo}`);
@@ -184,13 +188,18 @@ function createSum(sum, indexNo) {
 
    const multiplyBox = document.createElement("div");
    multiplyBox.classList.add("multiply-box");
-   multiplyBox.innerText = "X"
+   multiplyBox.innerText = "X";
    sumLine.appendChild(multiplyBox);
 
    const numberBoxRight = document.createElement("div");
    numberBoxRight.classList.add("numberbox-right");
    numberBoxRight.innerHTML = sum.secondNumber;
    sumLine.appendChild(numberBoxRight);
+
+   const equalsBox = document.createElement("div");
+   equalsBox.classList.add("equals-box");
+   equalsBox.innerText = "=";
+   sumLine.appendChild(equalsBox);
 
    const answerBox = document.createElement("input");
    answerBox.classList.add(`answer-box-${indexNo}`);
@@ -290,7 +299,6 @@ function createButton() {
    button.appendChild(buttonText);
    return button;
 }
-//---------------MAIN MENU---------------
 //---------------CORE---------------
 function getSelectedValueAndPrepareSums() {
    var selected = document.getElementsByClassName("menu-dropdown")[0].value;
@@ -315,10 +323,7 @@ function getSelectedValueAndPrepareSums() {
    return shuffled
 }
 
-
-//---------------CORE---------------
-
-//helpers
+//---------------HELPERS---------------
 function getFirstElementAndAdd(className, element) {
    document.getElementsByClassName(className)[0].appendChild(element);
 }

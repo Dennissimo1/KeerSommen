@@ -31,9 +31,197 @@ div[class="title-box"] {
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
+    color: dimgray;
     font-size: 3.5rem;
     font-weight: 300;
     animation: lights 5s 750ms linear infinite;
+}
+div[class="title-span"] {
+    font-size: 3.5rem;
+    font-weight: 300;
+    animation: lights 5s 750ms linear infinite;
+}
+div[class="menu"] {
+    position : relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    place-items: center;
+    top: 40%;
+}
+p[class="menu-title"] {
+    /* https://stackoverflow.com/questions/8865458/how-do-i-vertically-center-text-with-css */
+    text-align: center;
+    line-height: 80px;
+    margin-right: 10px;
+    width: 120px;
+    height: 80px;
+    background: beige;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.5s;
+  }
+p[class="menu-title"]:before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 26px;
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-right: 26px solid antiquewhite;
+    border-bottom: 13px solid transparent;
+    animation:pop-in 0.5s;
+    
+}
+span[class="menu-title-span"]{
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+div[class="menu-box-dropdown"]{
+    background: beige;
+    width: 120px;
+    height: 80px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.6s;
+
+}
+select[class="menu-dropdown"] {
+    width: 120px;
+    height: 60px;
+    background-color: beige;
+    margin-top: 10px;
+    border: 0px;
+}
+select[class="menu-dropdown"] > option {
+    text-align: center;
+}
+button[class="menu-button"] {
+    background-color: beige;
+    margin-left: 10px;
+    width: 120px;
+    height: 80px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.7s;
+}
+span[class="menu-button-text"]{
+    text-align: center; 
+}
+p[class="instruction"]{
+    position: relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    place-items: center;
+    top: 20%;
+    text-align: center;
+    line-height: 50px;
+    width: 400px;
+    height: 50px;
+    background: beige;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.5s;
+}
+span[class="instruction-span"]{
+    line-height: normal;
+}
+div[class="playing-field"]{
+    position : relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    place-items: center;
+    top: 40%;
+}
+div[class="numberbox-left"]{
+    text-align: center;
+    line-height: 80px;
+    margin-right: 10px;
+    width: 120px;
+    height: 80px;
+    background: beige;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.6s;
+    font-size: 400%;
+}
+div[class="multiply-box"]{
+    text-align: center;
+    line-height: 80px;
+    margin-right: 10px;
+    width: 100px;
+    height: 80px;
+    background: bisque;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.7s;
+    font-size: 300%;
+    font-weight: bolder;
+}
+div[class="numberbox-right"]{
+    text-align: center;
+    line-height: 80px;
+    margin-right: 10px;
+    width: 120px;
+    height: 80px;
+    background: beige;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.6s;
+    font-size: 400%;
+}
+div[class="equals-box"]{
+    text-align: center;
+    line-height: 80px;
+    margin-right: 10px;
+    width: 120px;
+    height: 80px;
+    background: bisque;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.6s;
+    font-size: 400%;
+}
+input[class^="answer-box-"]{
+    text-align: center;
+    line-height: 80px;
+    margin-right: 10px;
+    width: 100px;
+    height: 75px;
+    background: beige;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.6s;
+    font-size: 400%;
+}
+input[passed="true"]{ 
+    /* cant get this to work */
+    animation: togreen;
+}
+/* -- keyframes-- */
+@keyframes pop-in {
+    0% { opacity: 0; transform: scale(0.1); }
+    100% { opacity: 1; transform: scale(1); }
 }
 @keyframes lights {
     0% {
@@ -81,87 +269,6 @@ div[class="title-box"] {
         -1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
     }    
 }
-
-div[class="title-span"] {
-    font-size: 3.5rem;
-    font-weight: 300;
-    animation: lights 5s 750ms linear infinite;
-}
-@keyframes pop-in {
-    0% { opacity: 0; transform: scale(0.1); }
-    100% { opacity: 1; transform: scale(1); }
-}
-div[class="menu"] {
-    position : relative;
-    display: flex;
-    margin: auto;
-    justify-content: center;
-    place-items: center;
-    top: 40%;
-}
-p[class="menu-title"] {
-    /* https://stackoverflow.com/questions/8865458/how-do-i-vertically-center-text-with-css */
-    text-align: center;
-    line-height: 80px;
-    margin-right: 10px;
-    width: 120px;
-    height: 80px;
-    background: beige;
-    position: relative;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    animation:pop-in 0.5s;
-  }
-  p[class="menu-title"]:before {
-    content: "";
-    position: absolute;
-    right: 100%;
-    top: 26px;
-    width: 0;
-    height: 0;
-    border-top: 13px solid transparent;
-    border-right: 26px solid antiquewhite;
-    border-bottom: 13px solid transparent;
-    animation:pop-in 0.5s;
-    
-}
-span[class="menu-title-span"]{
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
-}
-div[class="menu-box-dropdown"]{
-    background: beige;
-    width: 120px;
-    height: 80px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    animation:pop-in 0.6s;
-
-}
-select[class="menu-dropdown"] {
-    width: 120px;
-    height: 60px;
-    background-color: beige;
-    margin-top: 10px;
-    border: 0px;
-}
-select[class="menu-dropdown"] > option {
-    text-align: center;
-}
-
-button[class="menu-button"] {
-    background-color: beige;
-    margin-left: 10px;
-    width: 120px;
-    height: 80px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    animation:pop-in 0.7s;
-}
-span[class="menu-button-text"]{
-    text-align: center; 
+@keyframes togreen {
+    100% {background-color: lightgreen};
 }
