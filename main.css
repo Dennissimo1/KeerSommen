@@ -170,7 +170,7 @@ div[class="multiply-box"]{
     border-radius: 10px;
     animation:pop-in 0.7s;
     font-size: 300%;
-    font-weight: bolder;
+    font-weight: lighter;
 }
 div[class="numberbox-right"]{
     text-align: center;
@@ -198,7 +198,8 @@ div[class="equals-box"]{
     -webkit-border-radius: 10px;
     border-radius: 10px;
     animation:pop-in 0.6s;
-    font-size: 400%;
+    font-size: 300%;
+    font-weight: lighter;
 }
 input[class^="answer-box-"]{
     text-align: center;
@@ -214,9 +215,21 @@ input[class^="answer-box-"]{
     animation:pop-in 0.6s;
     font-size: 400%;
 }
-input[passed="true"]{ 
-    /* cant get this to work */
-    animation: togreen;
+input[class^="answer-box-"][passed="true"]{ 
+    animation: togreen 0.4s;
+}
+button[class^="skip-button-"][disabled]{
+    display: none;
+}
+button:not([disabled])[class^="skip-button-"]{
+    background-color: beige;
+    margin-left: 10px;
+    width: 120px;
+    height: 80px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.7s;
 }
 /* -- keyframes-- */
 @keyframes pop-in {

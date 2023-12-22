@@ -86,6 +86,8 @@ function gamePlaying() {
          let skipButton = document.getElementsByClassName(`skip-button-${index}`)[0];
          skipButton.disabled = false;
          skipButton.addEventListener("click", function () {
+            skipButton.innerText = `Het antwoord is: ${answer}`
+            setTimeout(() => {
             failed_sums.push(all_sums[index]);
             document.getElementsByClassName(`answer-box-${index}`)[0].blur();
             document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
@@ -98,6 +100,7 @@ function gamePlaying() {
                setStateToEndGame();
                return
             }
+            }, 2000)
          }); 
       }
       if (answer === input) {
