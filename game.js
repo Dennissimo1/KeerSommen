@@ -76,52 +76,57 @@ function gamePlaying() {
    document.getElementsByClassName("sum-0")[0].setAttribute("status", "active");
 
    for (const [index, sum] of all_sums.entries()) {
-      document.getElementsByClassName(`answer-box-${index}`)[0].focus();
-      document.getElementsByClassName(`answer-box-${index}`)[0].oninput = function() {
-      
-      let answer = parseInt(this.getAttribute("answer"));
-      let input = parseInt(this.value);
-      console.log("Answer: " + answer + " Input: " + input);
-      if (answer !== input) {
-         let skipButton = document.getElementsByClassName(`skip-button-${index}`)[0];
-         skipButton.disabled = false;
-         skipButton.addEventListener("click", function () {
-            skipButton.innerText = `Het antwoord is: ${answer}`
+        let timeout = null;
+
+        document.getElementsByClassName(`answer-box-${index}`)[0].focus();
+        document.getElementsByClassName(`answer-box-${index}`)[0].oninput = function() {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => {
+            let answer = parseInt(this.getAttribute("answer"));
+            let input = parseInt(this.value);
+            console.log("Answer: " + answer + " Input: " + input);
+            if (answer !== input) {
+                let skipButton = document.getElementsByClassName(`skip-button-${index}`)[0];
+                skipButton.disabled = false;
+                skipButton.addEventListener("click", function () {
+                    skipButton.innerText = `Het antwoord is: ${answer}`
+                    setTimeout(() => {
+                    failed_sums.push(all_sums[index]);
+                    document.getElementsByClassName(`answer-box-${index}`)[0].blur();
+                    document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
+                    if (index != 9) {
+                    document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+                    document.getElementsByClassName(`answer-box-${index + 1}`)[0].focus();
+                    } else {
+                    passed_sums = all_sums.length - failed_sums.length
+                    total_passed_sums = passed_sums
+                    setStateToEndGame();
+                    return
+                    }
+                    }, 2000)
+                }); 
+            }
+        if (answer === input) {
+            this.disabled = true;
+            this.setAttribute("passed", "true");
             setTimeout(() => {
-            failed_sums.push(all_sums[index]);
-            document.getElementsByClassName(`answer-box-${index}`)[0].blur();
-            document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
-            if (index != 9) {
-               document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
-               document.getElementsByClassName(`answer-box-${index + 1}`)[0].focus();
-            } else {
-               passed_sums = all_sums.length - failed_sums.length
-               total_passed_sums = passed_sums
-               setStateToEndGame();
-               return
-            }
-            }, 2000)
-         }); 
-      }
-      if (answer === input) {
-         this.disabled = true;
-         this.setAttribute("passed", "true");
-         setTimeout(() => {
-            if (index === 9) {
-               document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
-               passed_sums = all_sums.length - failed_sums.length
-               console.log("number of sums passed: " + passed_sums)
-               total_passed_sums = passed_sums
-               setStateToEndGame();
-               return
-            }
-            document.getElementsByClassName(`answer-box-${index}`)[0].blur();
-            document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
-            document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
-            document.getElementsByClassName(`answer-box-${index + 1}`)[0].focus();
-         }, 500)
-         }      
-      } 
+                if (index === 9) {
+                document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
+                passed_sums = all_sums.length - failed_sums.length
+                console.log("number of sums passed: " + passed_sums)
+                total_passed_sums = passed_sums
+                setStateToEndGame();
+                return
+                }
+                document.getElementsByClassName(`answer-box-${index}`)[0].blur();
+                document.getElementsByClassName(`sum-${index}`)[0].setAttribute("status", "inactive");
+                document.getElementsByClassName(`sum-${index + 1}`)[0].setAttribute("status", "active");
+                document.getElementsByClassName(`answer-box-${index + 1}`)[0].focus();
+            }, 500)
+            }  
+        }, 1000);
+        } 
    }
 }
 
