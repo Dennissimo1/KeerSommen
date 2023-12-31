@@ -236,16 +236,15 @@ button:not([disabled])[class^="skip-button-"]{
     animation:pop-in 0.7s;
 }
 div[class="end-modal"]{
-    /* position: relative; */
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
     margin: auto;
     justify-content: center;
     place-items: center;
     text-align: center;
     line-height: 50px;
     width: 400px;
-    height: 300px;
+    height: 600px;
     background: beige;
     position: relative;
     -moz-border-radius: 10px;
