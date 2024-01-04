@@ -57,7 +57,7 @@ function gamePlaying() {
    main.removeChild(titleBox);
 
    //step 3: create new elements
-   const instruct = document.createElement("p");
+   const instruct = document.createElement("div");
    const instructBox = document.createElement("span");
    instruct.classList.add("instruction");
    instructBox.classList.add("instruction-span");
@@ -147,30 +147,54 @@ function gameEnd(total_passed_sums) {
    congratsText.innerText = "Je hebt de tafel afgerond!";
    modal.appendChild(congratsText);
 
-   const congratsImage = document.createElement("div");
-   congratsImage.classList.add("congrats-image");
+   //--- This is really verbose, will fix later with simple function --
 
-   const image = document.createElement("img");
-   image.classList.add("actual-image")
-   image.src = "assets/dancing_unicorn.gif";
+   const congratsImageBox = document.createElement("div");
+   congratsImageBox.classList.add("image-congrats");
+
+   const congratsImage = document.createElement("img");
+   congratsImage.classList.add("actual-image-congrats")
+   congratsImage.src = "assets/dancing_unicorn.gif";
    
-   congratsImage.appendChild(image);
+   congratsImageBox.appendChild(congratsImage);
 
+   const sadImageBox = document.createElement("div");
+   sadImageBox.classList.add("image-sad");
+
+   const sadImage = document.createElement("img");
+   sadImage.classList.add("actual-image-sad")
+   sadImage.src = "assets/sad_unicorn.gif";
    
+   sadImageBox.appendChild(sadImage);
 
+   const mehImageBox = document.createElement("div");
+   mehImageBox.classList.add("image-meh");
+
+   const mehImage = document.createElement("img");
+   mehImage.classList.add("actual-image-meh")
+   mehImage.src = "assets/meh_unicorn.gif";
+   
+   mehImageBox.appendChild(mehImage);
+
+
+   const resultsBox = document.createElement("div");
+   resultsBox.classList.add("results-box");
    const resultsText = document.createElement("div");
    resultsText.classList.add("results-text");
    if (total_passed_sums <= 5) {
       resultsText.innerText = `Je hebt ${total_passed_sums} van de 10 sommen goed. Volgende keer beter?`;
+      modal.appendChild(sadImageBox);
    };
    if (between(total_passed_sums, 6, 9)) {
       resultsText.innerText = `Je hebt ${total_passed_sums} van de 10 sommen goed. Goed gedaan hoor!`
+      modal.appendChild(mehImageBox);
    };
    if (total_passed_sums > 9) {
       resultsText.innerText = `Wow! Je hebt alles goed, topper!! Kan je dit ook met een andere tafel?`
-      modal.appendChild(congratsImage);
+      modal.appendChild(congratsImageBox);
    };
-   modal.appendChild(resultsText);
+   resultsBox.appendChild(resultsText);
+   modal.appendChild(resultsBox);
 
    const restartButton = document.createElement("button");
    restartButton.classList.add(`restart-button`);
@@ -181,6 +205,7 @@ function gameEnd(total_passed_sums) {
       const modal = document.getElementsByClassName("end-modal")[0];
       modal.remove();
       setStateToStart();
+      total_passed_sums = 0;
    }); 
 }
 

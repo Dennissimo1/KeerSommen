@@ -2,20 +2,16 @@ body {
     font-family: 'Roboto', sans-serif;
 	font-weight: 500;
 	font-size: 15px;
-    display: flex;
+    display: flex ;
     justify-content: center;
-    max-width: max-content;
-    margin: auto;
-    place-items: center;
-    padding: 2rem;
+    margin-top: 5%;
 }
+
 div[class="main"]{
-    /* display: flex;
-    place-items: center; */
+    
 }
 div[class^="sum"] {
-    display: flex;
-    flex-direction: row;
+    display: grid;
 }
 div[status="inactive"] {
     display: none;
@@ -118,7 +114,7 @@ button[class="menu-button"] {
 span[class="menu-button-text"]{
     text-align: center; 
 }
-p[class="instruction"]{
+div[class="instruction"]{
     position: relative;
     display: flex;
     margin: auto;
@@ -141,13 +137,17 @@ span[class="instruction-span"]{
 }
 div[class="playing-field"]{
     position : relative;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-template-rows: auto auto;
     margin: auto;
     justify-content: center;
     place-items: center;
     top: 40%;
 }
 div[class="numberbox-left"]{
+    grid-column: 1;
+    grid-row: 1;
     text-align: center;
     line-height: 80px;
     margin-right: 10px;
@@ -162,6 +162,8 @@ div[class="numberbox-left"]{
     font-size: 400%;
 }
 div[class="multiply-box"]{
+    grid-column: 2;
+    grid-row: 1;
     text-align: center;
     line-height: 80px;
     margin-right: 10px;
@@ -177,6 +179,8 @@ div[class="multiply-box"]{
     font-weight: lighter;
 }
 div[class="numberbox-right"]{
+    grid-column: 3;
+    grid-row: 1;
     text-align: center;
     line-height: 80px;
     margin-right: 10px;
@@ -191,6 +195,8 @@ div[class="numberbox-right"]{
     font-size: 400%;
 }
 div[class="equals-box"]{
+    grid-column: 4;
+    grid-row: 1;
     text-align: center;
     line-height: 80px;
     margin-right: 10px;
@@ -206,6 +212,8 @@ div[class="equals-box"]{
     font-weight: lighter;
 }
 input[class^="answer-box-"]{
+    grid-column: 5;
+    grid-row: 1;
     text-align: center;
     line-height: 80px;
     margin-right: 10px;
@@ -226,8 +234,10 @@ button[class^="skip-button-"][disabled]{
     display: none;
 }
 button:not([disabled])[class^="skip-button-"]{
+    grid-column: 3;
+    grid-row: 2;
     background-color: beige;
-    margin-left: 10px;
+    margin-top: 10px;
     width: 120px;
     height: 80px;
     -moz-border-radius: 10px;
@@ -242,26 +252,71 @@ div[class="end-modal"]{
     justify-content: center;
     place-items: center;
     text-align: center;
-    line-height: 50px;
+    /* line-height: 50px;
     width: 400px;
     height: 600px;
-    background: beige;
+    background: beige; */
     position: relative;
+    /* -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.5s; */
+}
+div[class="congrats-text"]{
+    /* hier ben ik, https://www.w3schools.com/css/tryit.asp?filename=trycss_grid_lines2*/
+    grid-row: 1;
+    text-align: center;
+    line-height: 80px;
+    margin-top: 10px;
+    background-color: beige;
+    width: 400px;
+    height: 80px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    animation:pop-in 0.5s;
+    animation:pop-in 0.7s;
 }
-div[class="congrats-text"]{
-    margin-top: -10px;
+div[class^="image-"]{
+    grid-row: 2;
+    margin-top: 10px;
+    background-color: beige;
+    width: 400px;
+    height: 300px;
+    place-items: center;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.7s;
 }
 img{
+    margin-top: 20px;
     max-width: 80%;
-    max-height: 80%
+    max-height: 80%;
+    border-style: solid;
+    border-width: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
 }
-button[class="restart-button"]{
+div[class="results-box"]{
+    grid-row: 3;
+    margin-top: 10px;
     background-color: beige;
-    margin-left: 10px;
+    width: 400px;
+    height: 80px;
+    justify-items: center;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    animation:pop-in 0.7s;
+}
+div[class="results-text"]{
+    margin-top: 20px;
+}
+
+button[class="restart-button"]{
+    grid-row: 4;
+    background-color: beige;
+    margin-top: 10px;
     width: 120px;
     height: 80px;
     -moz-border-radius: 10px;
